@@ -45,62 +45,68 @@
 using System.ComponentModel.DataAnnotations;
 
 Console.WriteLine("\n=======strech 1: Bang for 7, FizzBuzz==============");
-for (int i=1; i <=1000; i++)
+for (int i=1; i <=300; i++)
 {
+    List<string> output = [];
+
     string fizz = "";
-    if (i % 3 == 0) {fizz = "Fizz";}  
+    if (i % 3 == 0){fizz = "Fizz";}  
     string buzz = "";
     if (i % 5 == 0){buzz = "Buzz";}
     string bang = "";
     if (i % 7 == 0){bang = "Bang";}
-
-    // append fizz, buzz, bang
-    string output = fizz + buzz + bang;
-
-    // bong only
     string bong = "";
-    if (i % 11 == 0) 
-    {
-        bong = "Bong";
-        output = bong;
-    }  
-    
-    // fezz goes befor first B or append
+    if (i % 11 == 0){bong = "Bong";}
     string fezz = "";
-    if (i % 13 == 0)
+    if (i % 13 == 0){fezz = "Fezz";}
+
+    // bong only for 11*n, otherwise append fizz buzz bang  
+    if (i % 11 == 0) 
+    {       
+        output = [bong];
+    }  
+    else
     {
-        fezz = "Fezz";
-        if (output == "")
+        output = [fizz, buzz, bang];
+    }
+    // check if converted to string or not
+    bool noStr = output.All(str => str == "");
+
+    // fezz goes befor first B or append
+    if (i % 13 == 0)
+    {    
+        if (noStr)
         {
-            output = fezz;
+            output = [fezz];
         }
-        else if (output.IndexOf('B') == -1) // fizz only
+        else if (output.All(str => str.IndexOf('B') == -1)) // fizz only
         {
-            output += fezz;
+            output.Add(fezz);
         }
-        else if (bong != "") // bong only
+        else
         {
-            output = fezz + output;
-        }
-        else if (buzz != "")
-        {
-            output = fizz + fezz + buzz + bang;
-        }
-        else if (bang != "")
-        {
-            output = fizz + buzz + fezz + bang;
-        }
+            int bWordIndex = output.FindIndex(str => str.StartsWith('B'));
+            output.Insert(bWordIndex, fezz);
+        }   
     }
 
+    // reverse for 17
+    if (i % 17 == 0)
+    {
+        output.Reverse();
+    }
 
-    if (output == "") 
+    if (output.All(x => x == "")) 
     {
         Console.Write(i + " ");
     }
     else 
     {
-        Console.Write(output + " ");
+        foreach (string element in output)
+        {
+            Console.Write(element);
+        }
+        Console.Write(" ");
     }
-    
 
 }
