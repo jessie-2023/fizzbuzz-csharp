@@ -42,10 +42,10 @@
 //     }
 // }
 
-using System.ComponentModel.DataAnnotations;
+Console.WriteLine("Please enter the range: ");
+int range = int.Parse(Console.ReadLine());
 
-Console.WriteLine("\n=======strech 1: Bang for 7, FizzBuzz==============");
-for (int i=1; i <=300; i++)
+for (int i=1; i <=range; i++)
 {
     List<string> output = [];
 
@@ -60,19 +60,16 @@ for (int i=1; i <=300; i++)
     string fezz = "";
     if (i % 13 == 0){fezz = "Fezz";}
 
-    // bong only for 11*n, otherwise append fizz buzz bang  
-    if (i % 11 == 0) 
-    {       
-        output = [bong];
-    }  
-    else
-    {
-        output = [fizz, buzz, bang];
-    }
+    // 3, 5, 7: append fizz buzz bang  
+    output = [fizz, buzz, bang];
+
+    // 11: bong 
+    if (i % 11 == 0){output = [bong];}  
+    
     // check if converted to string or not
     bool noStr = output.All(str => str == "");
 
-    // fezz goes befor first B or append
+    // 13: fezz goes befor first B or append
     if (i % 13 == 0)
     {    
         if (noStr)
@@ -89,14 +86,14 @@ for (int i=1; i <=300; i++)
             output.Insert(bWordIndex, fezz);
         }   
     }
-
-    // reverse for 17
+    // 17: reverse printed words
     if (i % 17 == 0)
     {
         output.Reverse();
     }
-
-    if (output.All(x => x == "")) 
+    
+    // print number or output
+    if (noStr) 
     {
         Console.Write(i + " ");
     }
